@@ -4,10 +4,10 @@ import ordersRoutes from '../routes/orders';
 import productsRoutes from '../routes/products';
 import cors from 'cors';
 import db from '../db/dbconnection';
-/* import '../models/clients';
+import '../models/clients';
 import '../models/orders';
 import '../models/products';
- */
+
 
 class Server {
 
@@ -32,7 +32,7 @@ class Server {
     async dbConnection() {
         
         try {
-            await db.authenticate();
+            await db.sync({ force: false });
             console.log('Database connected');           
             
         } catch (error) {

@@ -18,10 +18,9 @@ const orders_1 = __importDefault(require("../routes/orders"));
 const products_1 = __importDefault(require("../routes/products"));
 const cors_1 = __importDefault(require("cors"));
 const dbconnection_1 = __importDefault(require("../db/dbconnection"));
-/* import '../models/clients';
-import '../models/orders';
-import '../models/products';
- */
+require("../models/clients");
+require("../models/orders");
+require("../models/products");
 class Server {
     constructor() {
         this.apiPaths = {
@@ -38,7 +37,7 @@ class Server {
     dbConnection() {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                yield dbconnection_1.default.authenticate();
+                yield dbconnection_1.default.sync({ force: false });
                 console.log('Database connected');
             }
             catch (error) {
