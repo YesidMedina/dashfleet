@@ -7,7 +7,7 @@ export const SearchHome = () => {
   const navigate = useNavigate();
 
   const getOrderDetail = async (orderCode: any, numberDocument: any) => {
-    const clients = await axios.get("dashfleet-production.up.railway.app/api/clients");
+    const clients = await axios.get("https://dashfleet-production.up.railway.app/api/clients");
 
     const user = clients.data.map((client: any) => {
       const userExist = client.document === numberDocument;
