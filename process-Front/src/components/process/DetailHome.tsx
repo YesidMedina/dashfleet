@@ -20,7 +20,7 @@ export const DetailHome = () => {
     const {
       orders: [{ ordercode, date, status }],
     } = order;
-    setOrders( ordercode ), setDates( date ), setStatus( status );
+    setOrders( ordercode ), setDates( date.slice(0, -9) ), setStatus( status );
   };
 
   const Products = ({ nameproduct, reference, amount }: any) => (
