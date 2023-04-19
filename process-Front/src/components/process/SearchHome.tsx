@@ -7,23 +7,31 @@ export const SearchHome = () => {
   const navigate = useNavigate();
 
   const getOrderDetail = async (orderCode: any, numberDocument: any) => {
-    const clients = await axios.get("https://dashfleet-production.up.railway.app/api/clients");
+    const clients = await axios.get(
+      "https://dashfleet-production.up.railway.app/api/clients"
+    );
 
-    const user = clients.data.map((client: any) => {
+    let orderExist: any = null;
+    const user = clients.data.find((client: any) => {
       const userExist = client.document === numberDocument;
-      const orderExist = client.orders.find(
+      orderExist = client.orders.find(
         (order: any) => order.ordercode === orderCode
       );
-      if (userExist && orderExist) {
-        navigate(`/detail/${client.id}/${orderExist.id}`);
-        toast.success("Bienvenido");
-      } 
-    });     
+      return userExist && orderExist;
+    });
+    if (user) {
+      navigate(`/detail/${user.id}/${orderExist?.id}`);
+      toast.success("Bienvenido");
+    } else {
+      toast.error("El Usuario no tiene registros pendientes");
+    }
   };
 
   const { register, handleSubmit } = useForm();
   const onSubmit = handleSubmit((values) => {
-    getOrderDetail( values.ordercode, values.document );
+    getOrderDetail(values.ordercode, values.document);
+    if (values) {
+    }
   });
 
   return (
@@ -31,7 +39,7 @@ export const SearchHome = () => {
       <div className=" mt-12 h-screen w-full">
         <div className="bg-white flex flex-col justify-center">
           <form
-            onSubmit={ onSubmit }
+            onSubmit={onSubmit}
             className="max-w-[500px] w-full mx-auto bg-gray-300 p-8 px-8
             rounded-3xl shadow-xl shadow-blue-500/50"
           >
@@ -66,7 +74,7 @@ export const SearchHome = () => {
               <input
                 className="rounded-md mt-2 p-2 focus:bg-gray-300 
               focus:outline.none text-black"
-                {...register("document", { required: true } ) } 
+                {...register("document", { required: true })}
               />
             </div>
             <div className="text-center p-2">
