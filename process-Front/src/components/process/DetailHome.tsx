@@ -12,7 +12,7 @@ export const DetailHome = () => {
 
   const getOrderDetail = async () => {
     const respData = await axios.get(
-      `https://dashfleet-production.up.railway.app//api/clients/${ params.userId }/${ params.orderId }`
+      `https://dashfleet-production.up.railway.app/api/clients/${ params.userId }/${ params.orderId }`
     );
     setInformation( respData.data );
 
